@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenuine Smiles - Daily Joy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: #888;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        .type-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .type-joke {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .type-fact {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+        }
+
+        .type-puzzle {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            color: white;
+        }
+
+        .content-area {
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .question, .fact-text, .puzzle-text {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 25px;
+        }
+
+        .answer, .hint {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+            animation: revealAnswer 0.5s ease-out;
+        }
+
+        @keyframes revealAnswer {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .answer {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            color: #5a4a8a;
+            font-weight: 600;
+        }
+
+        .hint {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            color: #856404;
+            font-style: italic;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            color: #8b5a3c;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(252, 182, 159, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .day-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .disclaimer {
+            text-align: center;
+            padding: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 25px;
+                margin: 10px;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .question, .fact-text, .puzzle-text {
+                font-size: 1.2rem;
+            }
+
+            .btn {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="logo">Jenuine Smiles</div>
+            <p class="tagline">Your daily dose of joy</p>
+
+            <div id="content-container">
+                <!-- Content will be loaded here by JavaScript -->
+            </div>
+
+            <div class="day-info">
+                <span id="date-display"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="disclaimer">
+        Disclaimer: Jennifer did not personally fact-check every fun fact. Please enjoy responsibly.
+    </div>
+
+    <script>
+        // Data arrays
+        const jokes = [
+            { question: "What smells better than it tastes?", answer: "Your nose." },
+            { question: "Why can't cats play poker in the jungle?", answer: "Too many cheetahs!" },
+            { question: "If a child refuses to take a nap, are they guilty of resisting arrest?", answer: "Yes, resisting a rest!" },
+            { question: "Did you hear about the kidnapping at school?", answer: "It's okay - he woke up." },
+            { question: "What do you call a pudgy psychic?", answer: "A four-chin teller." },
+            { question: "What do you call two monkeys that share an Amazon account?", answer: "Prime mates." },
+            { question: "What do you call it when a snowman throws a tantrum?", answer: "A meltdown." },
+            { question: "Why do fathers take an extra pair of socks when they go golfing?", answer: "In case they get a hole in one!" },
+            { question: "What did one ocean say to the other ocean?", answer: "Nothing, they just waved." },
+            { question: "Why do seagulls fly over the ocean?", answer: "Because if they flew over the bay, we'd call them bagels." },
+            { question: "How does the moon cut his hair?", answer: "Eclipse it." },
+            { question: "What did the zero say to the eight?", answer: "That belt looks good on you." },
+            { question: "Where do fruits go on vacation?", answer: "Pear-is!" },
+            { question: "How do you measure a snake?", answer: "In inches. They don't have feet." },
+            { question: "What is the difference between a hippo and a zippo?", answer: "One's really heavy and the other is a little lighter." },
+            { question: "Why don't ants get sick?", answer: "Because they have little antibodies." },
+            { question: "What kind of shorts do clouds wear?", answer: "Thunder pants!" },
+            { question: "What did Baby Corn say to Mama Corn?", answer: "Where's Pop Corn?" },
+            { question: "What's the best thing about Switzerland?", answer: "I don't know, but the flag is a big plus." },
+            { question: "Where do you learn to make a banana split?", answer: "Sundae school." },
+            { question: "What has more letters than the alphabet?", answer: "The post office!" },
+            { question: "What do you call a poor Santa Claus?", answer: "St. Nickel-less." },
+            { question: "How do you get a squirrel to like you?", answer: "Act like a nut." },
+            { question: "Why don't eggs tell jokes?", answer: "They'd crack each other up." },
+            { question: "I don't trust stairs. Why?", answer: "They're always up to something." },
+            { question: "Why couldn't the bicycle stand up by itself?", answer: "It was two tired." },
+            { question: "Why can't a nose be 12 inches long?", answer: "Because then it would be a foot." },
+            { question: "What does a lemon say when it answers the phone?", answer: "Yellow!" },
+            { question: "What kind of car does an egg drive?", answer: "A yolks-wagon." },
+            { question: "How do you make 7 even?", answer: "Take away the s." },
+            { question: "What time did the man go to the dentist?", answer: "Tooth hurt-y." },
+            { question: "How many tickles does it take to make an octopus laugh?", answer: "Ten tickles." },
+            { question: "What has four wheels and flies?", answer: "A garbage truck." },
+            { question: "What concert costs just 45 cents?", answer: "50 Cent featuring Nickelback!" },
+            { question: "How do you make a tissue dance?", answer: "You put a little boogie in it." },
+            { question: "Why did the math book look so sad?", answer: "Because of all of its problems!" },
+            { question: "What do you call cheese that isn't yours?", answer: "Nacho cheese." },
+            { question: "What kind of shoes do ninjas wear?", answer: "Sneakers!" },
+            { question: "How does a penguin build its house?", answer: "Igloos it together." },
+            { question: "Why did the scarecrow win an award?", answer: "Because he was outstanding in his field!" },
+            { question: "What's brown and sticky?", answer: "A stick." },
+            { question: "What do you call an elephant that doesn't matter?", answer: "An irrelephant." },
+            { question: "What do you get from a pampered cow?", answer: "Spoiled milk." },
+            { question: "What do you call a fake noodle?", answer: "An impasta." },
+            { question: "What do you call a belt made of watches?", answer: "A waist of time." },
+            { question: "What happens when a strawberry gets run over crossing the street?", answer: "Traffic jam." },
+            { question: "What do you call a pony with a sore throat?", answer: "A little hoarse." },
+            { question: "Where do math teachers go on vacation?", answer: "Times Square." },
+            { question: "What's a robot's favorite snack?", answer: "Computer chips." },
+            { question: "Why are piggy banks so wise?", answer: "They are filled with common cents." }
+        ];
+
+        const facts = [
+            "Mr. Potato Head was the first toy advertised on television.",
+            "Penguins' droppings can be pink due to their diet of krill and shrimp.",
+            "Gorillas sing and hum happy songs when they eat their favorite foods.",
+            "Jellyfish are 95% water.",
+            "Stomach acids are strong enough to dissolve metal.",
+            "56 million years ago, horses were the size of cats.",
+            "Polar bears have black skin underneath their white fur.",
+            "Scientists can extract DNA from a polar bear by using its footprint.",
+            "Dogs relieve themselves in alignment with the Earth's magnetic field.",
+            "A human bone is five times stronger than steel of the same weight.",
+            "A chameleon's tongue can be the size of or even twice as big as its body.",
+            "A zebra's skin is black - only its fur is striped.",
+            "Pirates used their eye patches so their eyes could adjust quickly to darkness below deck.",
+            "Otters hold hands while sleeping so they don't drift apart.",
+            "The moon is slowly moving away from Earth at about 1.5 inches per year.",
+            "If you try to suppress a sneeze, you can rupture a blood vessel in your head or neck.",
+            "You are about 1% shorter in the evening than in the morning.",
+            "Cockroaches can live up to a week without a head!",
+            "A rabbit's vision covers nearly 360 degrees.",
+            "Snails have approximately 14,000 teeth.",
+            "The most expensive book ever sold was purchased for $30.8 million.",
+            "It takes sloths two weeks to digest their food.",
+            "Alligators can live up to 80 years old.",
+            "When gorillas are happy, they burp.",
+            "People who fear numbers suffer from arithmophobia.",
+            "Sunsets on Mars are blue.",
+            "One year on Neptune lasts about 165 Earth years.",
+            "An ostrich's eye is bigger than its brain.",
+            "The air around a lightning strike is 5 times hotter than the sun's surface.",
+            "Russia is only 2 miles away from Alaska at the closest point.",
+            "Leonardo da Vinci invented an early form of scuba gear.",
+            "Sloths can hold their breath longer than dolphins - up to 40 minutes.",
+            "Michelangelo wrote a poem about how much he hated painting the Sistine Chapel.",
+            "You can buy insurance coverage that covers alien abductions.",
+            "A woman once made 1,127 pancakes in one hour.",
+            "The rarest stone in the world is the red diamond.",
+            "There are decomposed wasps inside of figs.",
+            "Chameleon spit is 400 times thicker than human spit.",
+            "Butterflies will drink blood when given the chance.",
+            "\"Dumbledore\" is Old English for \"Bumblebee.\"",
+            "The World Record for Longest Conga Line was set in 1988.",
+            "The tallest known snowman was 37.21 meters tall.",
+            "In Taiwan, it's trendy to get your dog's fur groomed into geometric shapes.",
+            "In 2012, $18.7 million worth of maple syrup was stolen in \"The Great Canadian Maple Syrup Heist.\"",
+            "Medical doctors in 500-1500 A.D. wore bird masks stuffed with herbs to ward off bad smells.",
+            "Artists in Italy created a pink stuffed rabbit big enough to see from space.",
+            "If you weighed 50 pounds on Earth, you would weigh about 3 pounds on Pluto.",
+            "Guy de Maupassant hated the Eiffel Tower so much he ate at its restaurant just to avoid seeing it.",
+            "20,000 people die every year from the kissing bug!",
+            "The tallest known snowman, built in Maine in 2008, stood at 122 feet tall."
+        ];
+
+        const puzzles = [
+            {
+                question: "The shorter I am, the bigger I am. What am I?",
+                hint: "Think about what happens when something burns down...",
+                answer: "A temper"
+            },
+            {
+                question: "What is bought by the yard but is worn by the foot?",
+                hint: "You walk on it in your home.",
+                answer: "Carpet"
+            },
+            {
+                question: "What has a foot but no leg?",
+                hint: "You might use this to measure things.",
+                answer: "A ruler"
+            },
+            {
+                question: "The more you take, the more you leave behind. What are they?",
+                hint: "You make these when you walk.",
+                answer: "Footsteps"
+            },
+            {
+                question: "What do you have when you're sitting down that you don't have when you're standing up?",
+                hint: "It's part of your body position.",
+                answer: "A lap"
+            },
+            {
+                question: "I go in dry and come out wet. The longer I'm in, the stronger I get. What am I?",
+                hint: "You drink this every day.",
+                answer: "A tea bag"
+            },
+            {
+                question: "What has a tongue but cannot taste, and a soul but cannot feel?",
+                hint: "You wear these on your feet.",
+                answer: "A shoe"
+            },
+            {
+                question: "What can you fold but not crease?",
+                hint: "It's what you do in a card game.",
+                answer: "Your hands (in poker)"
+            },
+            {
+                question: "What goes in the water black and comes out red?",
+                hint: "It's a sea creature.",
+                answer: "A lobster"
+            },
+            {
+                question: "You can only have it once you have given it. What is it?",
+                hint: "It's something people value highly in relationships.",
+                answer: "Respect"
+            },
+            {
+                question: "What flies around all day but never goes anywhere?",
+                hint: "It's attached to something that moves.",
+                answer: "A flag"
+            },
+            {
+                question: "What's as small as a mouse but guards a house like a lion?",
+                hint: "You need it to get inside.",
+                answer: "A lock"
+            },
+            {
+                question: "What gets whiter the dirtier it gets?",
+                hint: "You use it when writing on a board.",
+                answer: "A chalkboard"
+            },
+            {
+                question: "I have a three-digit number. The second digit is four times the third digit. The first digit is three less than the second digit. What is the number?",
+                hint: "Start with the third digit being 1.",
+                answer: "141"
+            },
+            {
+                question: "I am a number with a couple of friends. Quarter a dozen and you'll find me again. What am I?",
+                hint: "A dozen is 12. What's a quarter of that?",
+                answer: "3"
+            },
+            {
+                question: "How many 9's are there between 1 and 100?",
+                hint: "Don't forget numbers like 99 have two 9's.",
+                answer: "20"
+            },
+            {
+                question: "What is half of 2 plus 2?",
+                hint: "Be careful about the order of operations.",
+                answer: "3 (half of 2 is 1, plus 2 equals 3)"
+            },
+            {
+                question: "I am four times as old as my daughter. In 20 years' time I shall be twice as old as her. How old are we now?",
+                hint: "Set up an equation. If the daughter is x years old now...",
+                answer: "I am 40 and my daughter is 10"
+            },
+            {
+                question: "Ms. Smyth has 4 daughters. Each of her daughters has a brother. How many children does Ms. Smyth have?",
+                hint: "The sisters all share the same brother.",
+                answer: "5 children"
+            },
+            {
+                question: "How can you add eight 8's to get the number 1000?",
+                hint: "You can combine the 8's to make larger numbers like 88 or 888.",
+                answer: "888 + 88 + 8 + 8 + 8 = 1000"
+            },
+            {
+                question: "I saw a man in white, he looked quite a sight. He was not old, but he stood in the cold. And when he felt the sun, he started to run. Who could he be?",
+                hint: "Children love to build this in winter.",
+                answer: "A snowman"
+            },
+            {
+                question: "What is put on a table, cut, but never eaten?",
+                hint: "You play games with it.",
+                answer: "A deck of cards"
+            },
+            {
+                question: "Two legs I have, and this will confound - only at rest do they touch the ground. What am I?",
+                hint: "You use this to move around.",
+                answer: "A wheelbarrow"
+            },
+            {
+                question: "I cover what is real and hide what is true, but sometimes I bring out the courage in you. What am I?",
+                hint: "People wear these at parties or Halloween.",
+                answer: "Makeup (or a mask)"
+            },
+            {
+                question: "I'm so simple I only point, yet I guide people all over the world. What am I?",
+                hint: "Sailors have used this for centuries.",
+                answer: "A compass"
+            },
+            {
+                question: "Goes over all the hills and hollows, bites hard, but never swallows. What is it?",
+                hint: "You feel it especially in winter.",
+                answer: "Frost (or cold wind)"
+            },
+            {
+                question: "Break it and it is better, immediately set and harder to break again. What is it?",
+                hint: "Athletes try to achieve this.",
+                answer: "A record"
+            },
+            {
+                question: "We hurt without moving. We poison without touching. We bear the truth and the lies. We are not to be judged by our size. What are we?",
+                hint: "They come out of your mouth.",
+                answer: "Words"
+            },
+            {
+                question: "What grows in winter, dies in summer, and grows roots upward?",
+                hint: "It hangs from roofs and ledges.",
+                answer: "An icicle"
+            },
+            {
+                question: "Thousands lay up gold within this house, but no man made it. Spears past counting guard this house, but no man wards it.",
+                hint: "Bees live here.",
+                answer: "A beehive"
+            },
+            {
+                question: "Use the numbers 2, 3, 4 and 5 and the symbols + and = to make a true equation.",
+                hint: "Both sides of the equation should equal 7.",
+                answer: "2 + 5 = 3 + 4"
+            },
+            {
+                question: "What stinks when living and smells good when dead?",
+                hint: "It's a strip of meat.",
+                answer: "Bacon"
+            },
+            {
+                question: "What has a big mouth, yet never speaks?",
+                hint: "Water flows into it.",
+                answer: "A jar (or river)"
+            },
+            {
+                question: "First you see me in the grass dressed in yellow gay; next I am in dainty white, then I fly away. What am I?",
+                hint: "Children blow on these to make wishes.",
+                answer: "A dandelion"
+            },
+            {
+                question: "Born of sorrow, grows with age. You need a lot to be a sage. What is it?",
+                hint: "It comes from experience and learning.",
+                answer: "Wisdom"
+            },
+            {
+                question: "Some are quick to take it. Others must be coaxed. Those who choose to take it gain and lose the most.",
+                hint: "Entrepreneurs take this.",
+                answer: "Risk"
+            },
+            {
+                question: "Slayer of regrets, old and new, sought by many, found by few. What is it?",
+                hint: "It means letting go of past wrongs.",
+                answer: "Redemption (or forgiveness)"
+            },
+            {
+                question: "An open-ended barrel, it is shaped like a hive. It is filled with the flesh, and the flesh is alive!",
+                hint: "Look down at your hand.",
+                answer: "A thimble (on a finger)"
+            },
+            {
+                question: "A deep well full of knives. What is it?",
+                hint: "It's in your head.",
+                answer: "A mouth (full of teeth)"
+            },
+            {
+                question: "The strangest creature you'll ever find: Two eyes in front and many more behind. What is it?",
+                hint: "It has feathers.",
+                answer: "A peacock"
+            },
+            {
+                question: "I do not listen to reason, but I hear every siren's song and will try to steer us towards the rocks if you let me take the wheel. Who am I?",
+                hint: "It's a feeling, not a person.",
+                answer: "Temptation (or the heart)"
+            },
+            {
+                question: "I am something all men have but all men deny. Man created me but no man can hold me. What am I?",
+                hint: "It's an inner flaw.",
+                answer: "Fear (or ego)"
+            },
+            {
+                question: "I cannot be other than what I am, until the man who made me dies. Power and glory will fall to me finally, only when he last closes his eyes. What am I?",
+                hint: "Think about royalty.",
+                answer: "A prince (heir to the throne)"
+            },
+            {
+                question: "A hundred brothers lie next to each other; each white and fine - they've only one spine. I am the tongue that lies between two. Remove me to gather their wisdom to you.",
+                hint: "You find these in a library.",
+                answer: "A bookmark (between book pages)"
+            },
+            {
+                question: "I dig out tiny caves and store gold and silver in them. I also build bridges of silver and make crowns of gold. They are the smallest you could imagine. Who am I?",
+                hint: "Many people are afraid of visiting this person.",
+                answer: "A dentist"
+            },
+            {
+                question: "Shorter than my four siblings, but easily the strongest. Sometimes I wear a funny hat. What am I?",
+                hint: "Look at your hand.",
+                answer: "The thumb"
+            },
+            {
+                question: "With head without hair. With mouth without tooth. What is it?",
+                hint: "It holds liquid.",
+                answer: "A bottle"
+            },
+            {
+                question: "What must be in the oven yet cannot be baked? Grows in the heat yet shuns the light of day? What sinks in water but rises with air? Looks like skin, but is fine as hair?",
+                hint: "Bakers use this to make bread rise.",
+                answer: "Yeast"
+            },
+            {
+                question: "Kills the bad ones and the sad ones. Tightens to fit, so one size fits. What is it?",
+                hint: "It involves a rope.",
+                answer: "A noose (or a hug, depending on interpretation)"
+            }
+        ];
+
+        // Calculate which day in the cycle (0 = joke, 1 = fact, 2 = puzzle)
+        function getDayIndex() {
+            const startDate = new Date('2025-01-01');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            startDate.setHours(0, 0, 0, 0);
+            const diffTime = today - startDate;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays;
+        }
+
+        function getContentType(dayIndex) {
+            const cycle = dayIndex % 3;
+            if (cycle === 0) return 'joke';
+            if (cycle === 1) return 'fact';
+            return 'puzzle';
+        }
+
+        function getItemIndex(dayIndex, arrayLength) {
+            const cycleDay = Math.floor(dayIndex / 3);
+            return cycleDay % arrayLength;
+        }
+
+        function formatDate(date) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        function renderContent() {
+            const dayIndex = getDayIndex();
+            const contentType = getContentType(dayIndex);
+            const container = document.getElementById('content-container');
+            const dateDisplay = document.getElementById('date-display');
+
+            dateDisplay.textContent = formatDate(new Date());
+
+            let html = '';
+
+            if (contentType === 'joke') {
+                const joke = jokes[getItemIndex(dayIndex, jokes.length)];
+                html = `
+                    <span class="type-badge type-joke">Joke of the Day</span>
+                    <div class="content-area">
+                        <p class="question">${joke.question}</p>
+                        <div id="answer" class="answer hidden">${joke.answer}</div>
+                    </div>
+                    <div class="buttons">
+                        <button class="btn btn-primary" id="revealBtn" onclick="revealAnswer()">Reveal Answer</button>
+                    </div>
+                `;
+            } else if (contentType === 'fact') {
+                const fact = facts[getItemIndex(dayIndex, facts.length)];
+                html = `
+                    <span class="type-badge type-fact">Fact of the Day</span>
+                    <div class="content-area">
+                        <p class="fact-text">${fact}</p>
+                    </div>
+                `;
+            } else {
+                const puzzle = puzzles[getItemIndex(dayIndex, puzzles.length)];
+                html = `
+                    <span class="type-badge type-puzzle">Puzzle of the Day</span>
+                    <div class="content-area">
+                        <p class="puzzle-text">${puzzle.question}</p>
+                        <div id="hint" class="hint hidden">${puzzle.hint}</div>
+                        <div id="answer" class="answer hidden">${puzzle.answer}</div>
+                    </div>
+                    <div class="buttons">
+                        <button class="btn btn-secondary" id="hintBtn" onclick="showHint()">Get a Hint</button>
+                        <button class="btn btn-primary" id="revealBtn" onclick="revealAnswer()">Reveal Answer</button>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function showHint() {
+            const hint = document.getElementById('hint');
+            const hintBtn = document.getElementById('hintBtn');
+            hint.classList.remove('hidden');
+            hintBtn.disabled = true;
+            hintBtn.textContent = 'Hint Shown';
+        }
+
+        function revealAnswer() {
+            const answer = document.getElementById('answer');
+            const revealBtn = document.getElementById('revealBtn');
+            answer.classList.remove('hidden');
+            revealBtn.disabled = true;
+            revealBtn.textContent = 'Answer Revealed';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', renderContent);
+    </script>
+</body>
+</html>
